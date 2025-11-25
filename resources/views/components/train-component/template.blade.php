@@ -78,6 +78,8 @@
             transform: translateY(0);
         }
     </style>
+    
+    <script src="{{ asset('assest/jquery.min.js')}}"></script>
 </head>
 
 <body class="font-sans bg-gray-50">

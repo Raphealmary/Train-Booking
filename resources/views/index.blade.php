@@ -27,66 +27,69 @@
     <!-- Search Section -->
     <section class="bg-white py-8 shadow-md -mt-10 relative z-5 mx-4 rounded-xl">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-gray-700 mb-2">From</label>
-                    <div class="relative">
-                        <select  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                            <option selected>Select Departure city</option>
-                            <option value="">Cairo</option>
-                            <option value="">Hong Kong</option>
-                            <option value="">Tokyo</option>
+            <form action="{{ route("reservation") }}" method="post">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">From</label>
+                        <div class="relative">
+                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                                <option selected>Select Departure city</option>
+                                <option value="">Cairo</option>
+                                <option value="">Hong Kong</option>
+                                <option value="">Tokyo</option>
 
 
-                        </select>
-                        <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
+                            </select>
+                            <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-gray-700 mb-2">To</label>
-                    <div class="relative">
-                        <select  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                            <option selected value="">Destination city</option>
-                            <option value="">China</option>
-                            <option value="">Hong Kong</option>
-                            <option value="">Tokyo</option>
+                    <div>
+                        <label class="block text-gray-700 mb-2">To</label>
+                        <div class="relative">
+                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                                <option selected value="">Destination city</option>
+                                <option value="">China</option>
+                                <option value="">Hong Kong</option>
+                                <option value="">Tokyo</option>
 
 
-                        </select>
-                        <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
+                            </select>
+                            <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Passenger</label>
-                    <div class="relative">
-                        <select  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                            <option selected value="">1-Passenger</option>
-                            <option value="">2-Passenger</option>
-                            <option value="">3-Passenger</option>
-                            <option value="">4-Passenger</option>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Passenger</label>
+                        <div class="relative">
+                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                                <option selected value="">1-Passenger</option>
+                                <option value="">2-Passenger</option>
+                                <option value="">3-Passenger</option>
+                                <option value="">4-Passenger</option>
 
 
-                        </select>
-                        <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
+                            </select>
+                            <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block w-full text-gray-700 mb-2">Date</label>
-                    <div class="relative">
-                        <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                        <i class="fas fa-calendar-alt absolute right-3 top-3 text-gray-400"></i>
+                    <div>
+                        <label class="block w-full text-gray-700 mb-2">Date</label>
+                        <div class="relative">
+                            <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                            <i class="fas fa-calendar-alt absolute right-3 top-3 text-gray-400"></i>
+                        </div>
                     </div>
-                </div>
 
-            </div>
-            <div class="flex items pt-3">
-                <button class="w-full bg-primary text-white p-3 rounded-lg hover:bg-red-700 transition duration-300 flex items-center justify-center space-x-2">
-                    <i class="fas fa-search"></i>
-                    <span>Search Trains</span>
-                </button>
-            </div>
+                </div>
+                <div class="flex items pt-3">
+                    <button type="submit" class="w-full bg-primary text-white p-3 rounded-lg hover:bg-red-700 transition duration-300 flex items-center justify-center space-x-2">
+                        <i class="fas fa-search"></i>
+                        <span>Search Trains</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </section>
 
