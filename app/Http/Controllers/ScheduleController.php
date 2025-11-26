@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use App\Models\Coach;
 use App\Models\Trains;
+use App\Models\Route;
+use Exception;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -14,14 +16,37 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $showCoach = Coach::get();
+        $showRoute = Route::get();
         $showTrain = Trains::get();
-        return view("admin.schedule", compact("showCoach", "showTrain"));
+        return view("admin.schedule", compact("showRoute", "showTrain"));
     }
 
-    public function store(Request   $request)
+    public function store(Request   $re)
     {
-        //
+        $show = $re->validate([
+
+            "origin_id" => ["required", "integer"],
+            "destination_id" => ["required", "integer"],
+            "distance" => ["required", "alpha_num"],
+            "trains_id" => ["required", "integer"],
+            "departure" => ["required"],
+            "arrival" => ["required"],
+            "price" => ["required", "integer", "numeric"],
+
+
+        ]);
+        try {
+            Schedule::create($show);
+            return back()->with([
+                "type" => "success",
+                "msg" => "Schedule Added Successfully"
+            ]);
+        } catch (Exception $e) {
+            return back()->with([
+                "type" => "error",
+                "msg" => "Error Inserting"
+            ]);
+        }
     }
 
     /**

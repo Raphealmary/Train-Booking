@@ -1,13 +1,11 @@
 <x-train-admin.layout>
     @slot("title")
-    {{ "Seat | Admin" }}
+    {{ "Schedule | Admin" }}
 
     @endslot
 
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <x-train-admin.aside />
-
-
 
         <div class="flex flex-col flex-1 w-full">
 
@@ -30,76 +28,84 @@
             <main class="h-full overflow-y-auto">
                 <div class="container px-6 mx-auto grid">
                     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                        Seats
+                        Schedule
                     </h2>
 
-                    <form action="{{ route("adminseatStore") }}" method="post">
+                    <form action="{{ route("adminscheduleStore") }}" method="post">
                         @csrf
                         <div>
                             <div
                                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                                 <div class="md:flex  gap-4">
-                                    <label class="block w-full mt-4 text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">
-                                            Trains
-                                        </span>
-                                        <select
-                                            name="trains_id"
-                                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                            <option value="">Select Trains</option>
-                                            @foreach ($showTrain as $showTrains)
-                                            <option value={{ $showTrains->id}}>{{ $showTrains->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </label>
-                                    <label class="block mt-4 w-full text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">
-                                            Coach
-                                        </span>
-                                        <select
-                                            name="coaches_id"
-                                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                            <option value="">Select Coaches</option>
-                                            @foreach ($showCoach as $showCoachs)
-                                            <option value={{ $showCoachs->id}}>{{ $showCoachs->coach_type }}</option>
-                                            @endforeach
-                                        </select>
-                                    </label>
-                                    <label class="block mt-4 w-full text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">
-                                            Number of Seat
-                                        </span>
-                                        <select
-                                            name="seat_no"
-                                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                            <option value="20">20</option>
-                                            <option value="40">40</option>
-                                            <option value="60">60</option>
-                                            <option value="80">80</option>
-                                            <option value="100">100</option>
 
-                                        </select>
-                                    </label>
-                                    <label class="block mt-4 w-full text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">
-                                            Seat Identity
-                                        </span>
-                                        <select
-                                            name="index"
-                                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                            <option value="E">E</option>
-                                            <option value="F">F</option>
-                                            <option value="G">G</option>
-                                            <option value="H">H</option>
+                                    <div class="md:flex  gap-4">
+                                        <label class="block text-sm w-full  mb-5">
+                                            <span class="text-gray-700 dark:text-gray-400">
+                                                Origin
+                                            </span>
+                                            <select
+                                                name="origin_id"
+                                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="">Select Destination</option>
+                                                @foreach ($showRoute as $showRoutes)
+                                                <option value={{ $showRoutes->id}}>{{ $showRoutes->journey_route }}</option>
+                                                @endforeach
+                                            </select>
+                                        </label>
+                                        <label class="block text-sm w-full  mb-5">
+                                            <span class="text-gray-700 dark:text-gray-400">
+                                                Destination
+                                            </span>
+                                            <select
+                                                name="destination_id"
+                                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="">Select Destination</option>
+                                                @foreach ($showRoute as $showRoutes)
+                                                <option value={{ $showRoutes->id}}>{{ $showRoutes->journey_route }}</option>
+                                                @endforeach
+                                            </select>
+                                        </label>
 
+                                        <label class="block text-sm w-full  mb-5">
+                                            <span class="text-gray-700 dark:text-gray-400">Distance</span>
+                                            <input name="distance"
+                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                placeholder="1457km" />
+                                        </label>
+                                        <label class="block text-sm w-full  mb-5">
+                                            <span class="text-gray-700 dark:text-gray-400">
+                                                Trains
+                                            </span>
+                                            <select
+                                                name="trains_id"
+                                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="">Select Trains</option>
+                                                @foreach ($showTrain as $showTrains)
+                                                <option value={{ $showTrains->id}}>{{ $showTrains->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="md:flex  gap-4">
+                                        <label class="block text-sm w-full  mb-5 ">
+                                            <span class="text-gray-700 dark:text-gray-400">Departure Time</span>
+                                            <input name="departure" type="time"
+                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                placeholder="Somalia-Jubaland" />
+                                        </label>
+                                        <label class="block text-sm w-full  mb-5 ">
+                                            <span class="text-gray-700 dark:text-gray-400">Arrival Time</span>
+                                            <input name="arrival" type="time"
+                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                                        </label>
+                                        <label class="block text-sm w-full  mb-5 ">
+                                            <span class="text-gray-700 dark:text-gray-400">Price</span>
+                                            <input name="price" type="number"
+                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                placeholder="3000" />
+                                        </label>
+                                    </div>
 
-
-                                        </select>
-                                    </label>
 
                                 </div>
 
