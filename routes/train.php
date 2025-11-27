@@ -17,3 +17,4 @@ Route::get("/", function () {
 Route::get("/reservation", [Reservation::class, "index"]);
 Route::post("/reservation", [Reservation::class, "reserve"])->name("reservation");
 Route::get("/get-seat/{coach_id}", [Reservation::class, "getSeat"]);
+Route::get("/get-route/{id}", [Reservation::class, "getRoute"]);

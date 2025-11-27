@@ -18,7 +18,7 @@ class ScheduleController extends Controller
     {
         $showRoute = Route::get();
         $showTrain = Trains::get();
-        return view("admin.schedule", compact("showRoute", "showTrain"));
+        return view("admin.schedule", compact("showRoute", "showTrain",));
     }
 
     public function store(Request   $re)
@@ -34,6 +34,10 @@ class ScheduleController extends Controller
             "price" => ["required", "integer", "numeric"],
 
 
+        ], [
+            "origin_id" => "field cannot be empty",
+            "destination_id" => "field cannot be empty",
+            "trains_id" => "field cannot be empty"
         ]);
         try {
             Schedule::create($show);

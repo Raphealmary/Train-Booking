@@ -33,12 +33,11 @@
                     <div>
                         <label class="block text-gray-700 mb-2">From</label>
                         <div class="relative">
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                                <option selected>Select Departure city</option>
-                                <option value="">Cairo</option>
-                                <option value="">Hong Kong</option>
-                                <option value="">Tokyo</option>
-
+                            <select id="populatedDeparture" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                                <option value="" selected>Select Departure city</option>
+                                @foreach ($showRoute as $showRoutes)
+                                <option value={{ $showRoutes->id}}>{{ $showRoutes->journey_route }}</option>
+                                @endforeach
 
                             </select>
                             <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
@@ -48,11 +47,9 @@
                     <div>
                         <label class="block text-gray-700 mb-2">To</label>
                         <div class="relative">
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                            <select id="populatedDestination" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
                                 <option selected value="">Destination city</option>
-                                <option value="">China</option>
-                                <option value="">Hong Kong</option>
-                                <option value="">Tokyo</option>
+
 
 
                             </select>
@@ -232,6 +229,7 @@
 
     </section>
     <script src="{{ asset("assest/seatLogic.js") }}"></script>
+    <script src="{{ asset("assest/routeLogic.js") }}"></script>
     <!-- App Download -->
     <x-train-component.appdownload />
 
