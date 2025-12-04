@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\Schedule;
 use App\Models\Trains;
 use App\Models\Coach;
@@ -34,12 +36,44 @@ class Reservation extends Controller
         return $destination;
     }
 
-    public function reserve()
+    public function reserve(Request $re)
     {
         if (Auth::check()) {
-            return [
-                "status" => "happy"
-            ];
+
+            $show = $re->validate([
+                "depart" => ["required", "numeric"],
+                "destination" => ["required", "numeric"],
+                "passenger" => ["required", "numeric"],
+                "travelDate" => ["required", "date"],
+            ]);
+            // origin_id 	destination_id
+            $result = Schedule::where("origin_id", $show["depart"])
+                ->where("destination_id", $show["destination"])
+                ->with("route2")
+                ->with("route")
+                ->with("train")
+                ->get();
+
+            $showResult = [];
+            foreach ($result as $v) {
+
+                $showResult[] = [
+                    "origin_id" => $v->origin_id,
+                    "destination_id" => $v->destination_id,
+                    "trainName" => ucfirst($v->train->name),
+                    "start" => $v->route2->journey_route,
+                    "end" => $v->route->journey_route,
+                    "price" => number_format(($v["price"] * $show["passenger"]), 00),
+                    "arrival" => Carbon::parse($v["arrival"])->format("H:i A"),
+                    "departure" => Carbon::parse($v["departure"])->format("H:i A"),
+                    "passenger" => $show["passenger"],
+                    "originalPrice" => number_format($v["price"], 00),
+                    "date" => Carbon::parse($show["travelDate"])->format("F d, Y"),
+                ];
+            }
+
+
+            return $showResult;
         } else {
             return redirect("/login");
         }

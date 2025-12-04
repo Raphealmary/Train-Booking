@@ -2,9 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserBookRecords;
+use App\Models\Schedule;
+use App\Models\Seat;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class UserBookRecordsController extends Controller
 {
-    //
+    function store(Request $re)
+    {
+
+        $valid = $re->validate([
+            "trainBooking" => ["required"],
+            "coachBooking" => ["required"],
+            "seatBooking" => ["required"],
+            "departBooking" => ["required", "integer"],
+            "arrivalBooking" => ["required", "integer"],
+            "timeArrivalBooking" => ["required"],
+            "timeDepartBooking" => ["required"],
+            "priceBooking" => ["required"],
+            "orignalPriceBooking" => ["required"],
+            "dateBooking" => ["required"],
+            "passengerBooking" => ["required", "integer"],
+            "fullname" => ["required"],
+            "phone" => ["required"],
+            "email" => ["required", "email"]
+        ]);
+
+        $result = Schedule::where("origin_id", $valid["departBooking"])
+            ->where("destination_id", $valid["arrivalBooking"])
+            ->first();
+
+        if (number_format($result->price, 00) !== $valid["orignalPriceBooking"]) {
+            return redirect()->back()->with([
+                "type" => "warning",
+                "msg" => "Error Evaluating price"
+            ]);
+        }
+        if (number_format(($result->price * $valid["passengerBooking"]), 00) !== $valid["priceBooking"]) {
+            return redirect()->back()->with([
+                "type" => "warning",
+                "msg" => "Error Evaluating Price"
+            ]);
+        }
+
+        try {
+            $updateShow = UserBookRecords::create([
+                "users_id" => Auth::user()->id,
+                "booking_id" => Str::upper(Str::random(4)) . rand(2000, 9999),
+                "trainBooking" => $valid["trainBooking"],
+                "coachBooking" => $valid["coachBooking"],
+                "seatBooking" => $valid["seatBooking"],
+                "departBooking" => $valid["departBooking"],
+                "arrivalBooking" => $valid["arrivalBooking"],
+                "timeArrivalBooking" => $valid["timeArrivalBooking"],
+                "timeDepartBooking" => $valid["timeDepartBooking"],
+                "priceBooking" => $valid["priceBooking"],
+                "orignalPriceBooking" => $valid["orignalPriceBooking"],
+                "dateBooking" => $valid["dateBooking"],
+                "passengerBooking" => $valid["passengerBooking"],
+                "fullname" => $valid["fullname"],
+                "phone" => $valid["phone"],
+                "email" => $valid["email"],
+
+            ]);
+            if ($updateShow) {
+                Seat::where("seat_no", $valid["seatBooking"])->update(["status" => "booked"]);
+                return redirect()->back()->with([
+                    "type" => "success",
+                    "msg" => "Order is Booked for  {$valid['trainBooking']}  {$valid['coachBooking']} 'seat' {$valid['seatBooking']}"
+                ]);
+            } else {
+                return redirect()->back()->with([
+                    "type" => "error",
+                    "msg" => "Error opps Occured"
+                ]);
+            }
+        } catch (Exception $e) {
+
+            return redirect()->back()->with([
+                "type" => "error",
+                "msg" => "Error opps Occured $e"
+            ]);
+        };
+    }
 }

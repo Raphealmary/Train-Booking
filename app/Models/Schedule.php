@@ -13,4 +13,12 @@ class Schedule extends Model
     {
         return $this->belongsTo(Route::class, "destination_id", "id");
     }
+    public function route2()
+    {
+        return $this->belongsTo(Route::class, "origin_id", "id");
+    }
+    public function train()
+    {
+        return $this->belongsTo(Trains::class, "trains_id", "id");
+    }
 }

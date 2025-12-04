@@ -8,5 +8,8 @@ class Trains extends Model
 {
     protected $fillable = ["name", "number", "type"];
 
-
+    public function train()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

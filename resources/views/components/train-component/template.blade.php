@@ -78,7 +78,7 @@
             transform: translateY(0);
         }
     </style>
-    
+    <link rel="stylesheet" href="{{ asset("assest/toastr/toastr.min.css") }}">
     <script src="{{ asset('assest/jquery.min.js')}}"></script>
 </head>
 
@@ -89,6 +89,16 @@
     <script src="{{ asset('assest/lucide.min.js')}}"></script>
 
     <script src="{{ asset('assest/script.js')}}"></script>
+
+    <script src="{{ asset('assest/toastr/toastr.min.js')}}"></script>
+    <script src="{{ asset('assest/toastr/toastConfig.js')}}"></script>
+    <?php if (!empty($msg)) {
+    ?>
+        <script>
+            toastr["{{ $type }}"]("{{$msg }}");
+        </script>
+    <?php }
+    ?>
 </body>
 
 </html>
