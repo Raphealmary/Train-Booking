@@ -19,7 +19,7 @@
             <div class="max-w-2xl">
                 <h1 class="text-4xl md:text-5xl font-bold mb-6">Travel Smarter, Travel Faster with RailExpress</h1>
                 <p class="text-xl mb-8">Book train tickets in seconds. Enjoy comfortable journeys with the best prices guaranteed.</p>
-                <button class="bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-700 transition duration-300">Book Now</button>
+                <button class="bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-700 transition duration-300"><a href="{{ route("reservationIndex") }}">Book Now</a> </button>
             </div>
         </div>
     </section>
@@ -27,18 +27,17 @@
     <!-- Search Section -->
     <section class="bg-white py-8 shadow-md -mt-10 relative z-5 mx-4 rounded-xl">
         <div class="container mx-auto px-4">
-            <form action="{{ route("reservation") }}" method="post">
+            <form action="{{ route("reservationIndex") }}" method="get">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-gray-700 mb-2">From</label>
                         <div class="relative">
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                                <option selected>Select Departure city</option>
-                                <option value="">Cairo</option>
-                                <option value="">Hong Kong</option>
-                                <option value="">Tokyo</option>
-
+                            <select id="populatedDeparture" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                                <option value="" selected>Select Departure city</option>
+                                @foreach ($showRoute as $showRoutes)
+                                <option value={{ $showRoutes->id}}>{{ $showRoutes->journey_route }}</option>
+                                @endforeach
 
                             </select>
                             <i data-lucide="tram-front" class="fas fa-map-marker-alt absolute right-3 top-3 text-gray-400"></i>
@@ -48,11 +47,9 @@
                     <div>
                         <label class="block text-gray-700 mb-2">To</label>
                         <div class="relative">
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                            <select  id="populatedDestination" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
                                 <option selected value="">Destination city</option>
-                                <option value="">China</option>
-                                <option value="">Hong Kong</option>
-                                <option value="">Tokyo</option>
+
 
 
                             </select>
@@ -62,11 +59,11 @@
                     <div>
                         <label class="block text-gray-700 mb-2">Passenger</label>
                         <div class="relative">
-                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
-                                <option selected value="">1-Passenger</option>
-                                <option value="">2-Passenger</option>
-                                <option value="">3-Passenger</option>
-                                <option value="">4-Passenger</option>
+                            <select id="passenger" name="passenger" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                                <option selected value="1">1-Passenger</option>
+                                <option value="2">2-Passenger</option>
+                                <option value="3">3-Passenger</option>
+                                <option value="4">4-Passenger</option>
 
 
                             </select>
@@ -77,7 +74,7 @@
                     <div>
                         <label class="block w-full text-gray-700 mb-2">Date</label>
                         <div class="relative">
-                            <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                            <input id="travelDate" name="date" type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
                             <i class="fas fa-calendar-alt absolute right-3 top-3 text-gray-400"></i>
                         </div>
                     </div>
@@ -86,7 +83,7 @@
                 <div class="flex items pt-3">
                     <button type="submit" class="w-full bg-primary text-white p-3 rounded-lg hover:bg-red-700 transition duration-300 flex items-center justify-center space-x-2">
                         <i class="fas fa-search"></i>
-                        <span>Search Trains</span>
+                        <span>Search Bookings</span>
                     </button>
                 </div>
             </form>
@@ -328,7 +325,7 @@
             </div>
         </div>
     </section>
-
+    <script src="{{ asset("assest/routeLogic.js") }}"></script>
     <!-- App Download -->
     <x-train-component.appdownload />
 

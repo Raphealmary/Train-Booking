@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trains;
+use App\Models\Coach;
 use App\Models\UserBookRecords;
 use App\Models\Schedule;
 use App\Models\Seat;
+use App\Models\Route;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -12,6 +15,25 @@ use Illuminate\Support\Facades\Auth;
 
 class UserBookRecordsController extends Controller
 {
+
+    function index()
+    {
+        $showCoach = Coach::get();
+        $showRoute = Route::get();
+        $showTrain = Trains::get();
+        return view("index", compact("showCoach", "showTrain", "showRoute"));
+    }
+    function userBook()
+    {
+        $user = Auth::user()->id;
+        $shows = UserBookRecords::where("users_id", $user)
+            ->with("route2")
+            ->with("route")
+            ->get();
+
+        return view('dashboard', compact("shows"));
+    }
+
     function store(Request $re)
     {
 

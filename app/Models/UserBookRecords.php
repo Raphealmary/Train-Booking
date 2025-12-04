@@ -25,4 +25,14 @@ class UserBookRecords extends Model
         "email",
 
     ];
+
+
+    public function route()
+    {
+        return $this->belongsTo(Route::class, "departBooking", "id");
+    }
+    public function route2()
+    {
+        return $this->belongsTo(Route::class, "arrivalBooking", "id");
+    }
 }

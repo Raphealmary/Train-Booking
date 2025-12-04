@@ -6,10 +6,15 @@
          </div>
 
          <nav class="hidden md:flex space-x-8">
-             <a href="#" class="text-gray-600 hover:text-primary font-medium">Home</a>
-             <a href="#" class="text-gray-600 hover:text-primary font-medium">Book Tickets</a>
-             <a href="#" class="text-gray-600 hover:text-primary font-medium">Train Status</a>
+             <a href="{{route('home')}}" class="text-gray-600 hover:text-primary font-medium">Home</a>
+             @guest
+             <a href="{{route('reservationIndex')}}" class="text-gray-600 hover:text-primary font-medium">Book Tickets</a>
+
+             <a href="#" class="text-gray-600 hover:text-primary font-medium">Print Ticket</a>
+             @endguest
              <a href="{{route('dashboard')}}" class="text-gray-600 hover:text-primary font-medium">My Bookings</a>
+             <a href="#" class="text-gray-600 hover:text-primary font-medium">Help</a>
+             <a href="#" class="text-gray-600 hover:text-primary font-medium">Offers</a>
 
          </nav>
 

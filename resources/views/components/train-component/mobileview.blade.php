@@ -11,9 +11,11 @@
     </div>
 
     <nav class="flex flex-col space-y-6">
-        <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Home</a>
-        <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Book Tickets</a>
-        <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Train Status</a>
+        <a href="{{route('home')}}" class="text-gray-800 hover:text-primary font-medium text-lg">Home</a>
+        @guest
+        <a href="{{route('reservationIndex')}}" class="text-gray-800 hover:text-primary font-medium text-lg">Book Tickets</a>
+        <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Print Ticket</a>
+        @endguest
         <a href="{{route('dashboard')}}" class="text-gray-800 hover:text-primary font-medium text-lg">My Bookings</a>
         <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Offers</a>
         <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Help</a>

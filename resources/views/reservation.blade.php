@@ -41,15 +41,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-2xl">
                 <h1 class="text-4xl md:text-5xl font-bold mb-6">
-
-
-
-
-
-
-
-
-                    Travel Smarter, Travel Faster with RailExpress
+                    RailExpress gets You, Stay Safe....
                 </h1>
                 <p class="text-xl mb-8">Book train tickets in seconds. Enjoy comfortable journeys with the best prices guaranteed.</p>
                 <button class="bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-700 transition duration-300">Book Now</button>
@@ -124,7 +116,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="bg-white py-8 shadow-md -mt-10 relative z-5 mx-4 rounded-xl">
+    <section class="bg-white py-8 shadow-md mt-10 relative z-5 mx-4 rounded-xl">
 
         <div class="min-h-screen p-10">
 
@@ -287,6 +279,7 @@
     <script src="{{ asset("assest/routeLogic.js") }}"></script>
     <!-- App Download -->
     <x-train-component.appdownload />
+    
 
     <!-- Footer -->
     <x-train-component.footer />
