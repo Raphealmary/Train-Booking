@@ -6,8 +6,15 @@ use Illuminate\Support\Facades\Route;
 
 require("train.php");
 require("train_admin.php");
+//guest
+Route::get("/ticket", function () {
+    return view("ticket");
+})->name("ticket");
+//guest
+
 
 Route::get('/dashboard', [UserBookRecordsController::class, "userBook"])->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/printTicket', [UserBookRecordsController::class, "print"])->name('print');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

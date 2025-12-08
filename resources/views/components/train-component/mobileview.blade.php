@@ -14,7 +14,7 @@
         <a href="{{route('home')}}" class="text-gray-800 hover:text-primary font-medium text-lg">Home</a>
         @guest
         <a href="{{route('reservationIndex')}}" class="text-gray-800 hover:text-primary font-medium text-lg">Book Tickets</a>
-        <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Print Ticket</a>
+        <a href="{{route('ticket')}}" class="text-gray-800 hover:text-primary font-medium text-lg">Print Ticket</a>
         @endguest
         <a href="{{route('dashboard')}}" class="text-gray-800 hover:text-primary font-medium text-lg">My Bookings</a>
         <a href="#" class="text-gray-800 hover:text-primary font-medium text-lg">Offers</a>

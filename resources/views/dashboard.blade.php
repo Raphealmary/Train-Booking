@@ -55,8 +55,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($shows->count() > 0)
                         @foreach ($shows as $show)
-                        @if (!$show)
+
 
                         <tr class="bg-neutral-primary-soft border-b border-default">
                             <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
@@ -85,9 +86,19 @@
                                 {{ $show->dateBooking }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="#" class="font-medium bg-green-600 text-white px-4 py-2 rounded-lg text-fg-brand hover:underline">Print</a>
+
+                                <form action="{{ route("print") }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="bookingid" value="{{ $show->booking_id  }}">
+                                    <button type="submit"
+                                        class="font-medium bg-green-600 text-white px-4 py-2 rounded-lg text-fg-brand hover:underline">Print
+                                    </button>
+                                </form>
                             </td>
                         </tr>
+
+
+                        @endforeach
                         @else
 
                         <tr>
@@ -99,9 +110,6 @@
                             </div>
                         </tr>
                         @endif
-
-                        @endforeach
-
                     </tbody>
                 </table>
             </div>

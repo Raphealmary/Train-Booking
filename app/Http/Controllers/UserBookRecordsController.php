@@ -34,6 +34,16 @@ class UserBookRecordsController extends Controller
         return view('dashboard', compact("shows"));
     }
 
+    function print(Request $re)
+    {
+
+        return view("printTicket");
+    }
+
+
+
+
+
     function store(Request $re)
     {
 
