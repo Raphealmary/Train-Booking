@@ -3,121 +3,182 @@
     {{ "Train Reservation Receipt - Modern Train Booking" }}
     @endslot
 
-    <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-300">
 
-        <!-- Header -->
-        <div class="flex items-center justify-between border-b pb-4">
-            <div>
-                <h1 class="text-xl font-bold">Electronic Reservation Slip (ERS) - B2B</h1>
-                <p class="text-sm text-gray-600">IRCTC • Indian Railway</p>
-            </div>
 
-            <div class="text-right">
-                <img src="https://dummyimage.com/100x40/000/fff&text=PayPoint" class="h-10" />
-            </div>
-        </div>
+    <style>
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 10px;
+            color: #333;
+            margin: 0;
+            /* padding: 20px; */
+        }
 
-        <!-- Trip Info -->
-        <div class="grid grid-cols-2 gap-4 mt-4">
-            <div class="border p-3 rounded">
-                <h2 class="font-semibold text-gray-700">Boarding From</h2>
-                <p class="text-gray-800">New Farakka Jn (NRK)</p>
-                <p class="text-xs text-gray-500">Departure: 19:57 • 12-Aug-2022</p>
-            </div>
+        .receipt-container {
+            width: 300px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
 
-            <div class="border p-3 rounded">
-                <h2 class="font-semibold text-gray-700">To</h2>
-                <p class="text-gray-800">Delhi (DLI)</p>
-                <p class="text-xs text-gray-500">Arrival: 04:50 • 14-Aug-2022</p>
-            </div>
-        </div>
+        .title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-        <!-- Train Details -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-sm">
-            <div><strong>PNR:</strong> 6306615128</div>
-            <div><strong>Train No/Name:</strong> 13483 / FARAKKA EXP</div>
-            <div><strong>Class:</strong> Sleeper Class (SL)</div>
-            <div><strong>Distance:</strong> 1424 KM</div>
-        </div>
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+        }
 
-        <!-- Passenger Table -->
-        <h2 class="mt-6 font-semibold text-lg border-b pb-2">Passenger Details</h2>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+        }
 
-        <table class="w-full text-sm mt-3 border">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="p-2 border">#</th>
-                    <th class="p-2 border">Name</th>
-                    <th class="p-2 border">Age</th>
-                    <th class="p-2 border">Gender</th>
-                    <th class="p-2 border">Booking Status</th>
-                    <th class="p-2 border">Current Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center">
-                    <td class="p-2 border">1</td>
-                    <td class="p-2 border">HASEN SEKH</td>
-                    <td class="p-2 border">43</td>
-                    <td class="p-2 border">M</td>
-                    <td class="p-2 border">RAC/17</td>
-                    <td class="p-2 border">RAC/16</td>
-                </tr>
-                <tr class="text-center">
-                    <td class="p-2 border">2</td>
-                    <td class="p-2 border">RINTU SEKH</td>
-                    <td class="p-2 border">43</td>
-                    <td class="p-2 border">M</td>
-                    <td class="p-2 border">RAC/18</td>
-                    <td class="p-2 border">RAC/17</td>
-                </tr>
-                <tr class="text-center">
-                    <td class="p-2 border">3</td>
-                    <td class="p-2 border">SARIFUL SEKH</td>
-                    <td class="p-2 border">42</td>
-                    <td class="p-2 border">M</td>
-                    <td class="p-2 border">RAC/19</td>
-                    <td class="p-2 border">RAC/18</td>
-                </tr>
-                <!-- Add more rows as required -->
-            </tbody>
+        td,
+        th {
+            padding: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .no-border td {
+            border: none;
+            padding: 2px 0;
+        }
+
+        .barcode {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .small {
+            font-size: 11px;
+            color: #777;
+        }
+    </style>
+
+    <div class="receipt-container">
+
+        <div class="title">RailExpress Booking Receipt</div>
+
+        <!-- Booking Summary -->
+        <div class="section-title">Booking Information</div>
+        <table>
+
+            <tr>
+                <td><strong>Booking Date:</strong></td>
+                <td>
+                    {{ $data->created_at }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Booking Reference:</strong></td>
+                <td>{{ $data->booking_id }}</td>
+            </tr>
         </table>
 
-        <!-- Payment Details -->
-        <h2 class="mt-6 font-semibold text-lg border-b pb-2">Payment Details</h2>
+        <!-- Passenger -->
+        <div class="section-title">Passenger Details</div>
+        <table>
+            <tr>
+                <td><strong>Name:</strong></td>
+                <td>{{ ucfirst($data->fullname) }}</td>
+            </tr>
+            <tr>
+                <td><strong>Contact:</strong></td>
+                <td>{{ $data->phone}}</td>
+            </tr>
+        </table>
 
-        <div class="text-sm mt-3">
-            <p><strong>Ticket Fare:</strong> 3600</p>
-            <p><strong>IRCTC Conv. Fee:</strong> 17.7</p>
-            <p><strong>Agent Service Charge:</strong> 20.00</p>
-            <p><strong>Total Amount:</strong> ₹3676.00</p>
+        <!-- Journey -->
+        <div class="section-title">Journey Details</div>
+        <table>
+            <tr>
+                <td><strong>Train No:</strong></td>
+                <td>{{ $data->trainBooking }}</td>
+            </tr>
+            <tr>
+                <td><strong>Class:</strong></td>
+                <td>{{ $data->coachBooking }}</td>
+            </tr>
+            <tr>
+                <td><strong>Seat:</strong></td>
+                <td>{{ $data->seatBooking }}</td>
+            </tr>
+            <tr>
+                <td><strong>From:</strong></td>
+                <td>{{ $data->route->journey_route }}</td>
+            </tr>
+            <tr>
+                <td><strong>Departure:</strong></td>
+                <td>{{ $data->timeDepartBooking." ".$data->dateBooking }}</td>
+            </tr>
+            <tr>
+                <td><strong>To:</strong></td>
+                <td>{{ $data->route2->journey_route }}</td>
+            </tr>
+            <tr>
+                <td><strong>Arrival:</strong></td>
+                <td>{{ $data->timeArrivalBooking." ".$data->dateBooking }}</td>
+            </tr>
+
+        </table>
+
+        <!-- Fare -->
+        <div class="section-title">Fare Breakdown</div>
+        <table>
+            <tr>
+                <td>Base Fare</td>
+                <td>{{ $data->orignalPriceBooking }}</td>
+            </tr>
+
+            <tr>
+                <td>Additional Users</td>
+                <td>{{ $data->passengerBooking }} passenger</td>
+            </tr>
+            <tr>
+                <td><strong>Total Paid</strong></td>
+                <td><strong>{{ $data->priceBooking }}</strong></td>
+            </tr>
+        </table>
+
+        <!-- Payment -->
+        <!-- <div class="section-title">Payment Method</div>
+    <table>
+        <tr>
+            <td><strong>Method:</strong></td>
+            <td>Visa • **** 4242</td>
+        </tr>
+    </table> -->
+
+        <!-- Ticket Status -->
+        <div class="section-title">Ticket Status</div>
+        <table>
+            <tr>
+                <td><strong>Status:</strong></td>
+                <td>CONFIRMED</td>
+            </tr>
+        </table>
+
+        <!-- Barcode -->
+        <div class="barcode">
+            <!-- Replace with your Base64 barcode -->
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA" width="150">
+            <div class="small">{{ $data->booking_id }}</div>
         </div>
 
-        <!-- QR + Agent -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-
-            <!-- QR -->
-            <div class="flex justify-center items-center">
-                <div class="border p-3">
-                    <img src="https://dummyimage.com/150x150/000/fff&text=QR" class="h-40 w-40" />
-                </div>
-            </div>
-
-            <!-- Agent Details -->
-            <div class="text-sm">
-                <h2 class="font-semibold mb-2">Agent Details</h2>
-                <p><strong>Principal Agent:</strong> Pay Point India Network Pvt. Ltd.</p>
-                <p><strong>Email:</strong> MUNNA94752@GMAIL.COM</p>
-                <p><strong>Customer Care:</strong> 9475269043</p>
-                <p><strong>Address:</strong> Bahadurpur, West Bengal</p>
-            </div>
-
+        <div class="small" style="margin-top: 15px; text-align: center;">
+            Thank you for choosing RailExpress Co.<br>
+            Customer Care: +234 (085) 555-0123
         </div>
-
-        <p class="text-xs text-gray-500 mt-6 border-t pt-3">
-            *Original ID proof required while travelling.
-            *Printed timings may be updated; verify with Railway enquiry.
-        </p>
 
     </div>
 

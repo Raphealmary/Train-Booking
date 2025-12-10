@@ -279,7 +279,7 @@
     <script src="{{ asset("assest/routeLogic.js") }}"></script>
     <!-- App Download -->
     <x-train-component.appdownload />
-    
+
 
     <!-- Footer -->
     <x-train-component.footer />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Carbon;
 use App\Models\Trains;
 use App\Models\Coach;
 use App\Models\UserBookRecords;
@@ -12,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserBookRecordsController extends Controller
 {
@@ -36,8 +38,22 @@ class UserBookRecordsController extends Controller
 
     function print(Request $re)
     {
+        $show = $re->validate([
+            "bookingid" => ["required", "string"]
+        ]);
 
-        return view("printTicket");
+        $data = UserBookRecords::where("booking_id", $show["bookingid"])
+            ->with("route2")
+            ->with("route")
+            ->first();
+
+        if ($data) {
+            $pdf = PDF::loadView("printTicket", compact("data"));
+            return $pdf->stream("ticket.pdf");
+            //return $pdf->download("ticket.pdf");
+        } else {
+            return back()->with(["type" => "error", "msg" => "Ticket receipt not Found"]);
+        }
     }
 
 

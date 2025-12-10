@@ -15,7 +15,30 @@
                     <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Print</button>
                 </form>
             </div>
+            <!-- // error from return -->
+            @session("type")
+            @slot("type")
+            {{ session("type") }}
+            @endslot
 
+            @slot("msg")
+            {{ session("msg") }}
+
+            @endslot
+            @endsession
+            <!-- //error from reqest -->
+            @if ($errors->any())
+            @slot("type")
+            {{ "error" }}
+            @endslot
+            @foreach($errors->all() as $errors)
+
+            @slot("msg")
+
+            {{ $errors }}
+            @endslot
+            @endforeach
+            @endif
 
         </div>
 
