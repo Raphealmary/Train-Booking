@@ -139,19 +139,22 @@
                                     @php
                                     $p=1;
                                     @endphp
-
+                                    @foreach ($showSeat as $showSeats )
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3">
                                             {{ $p++ }}
                                         </td>
                                         <td class="px-4 py-3">
-
+                                            {{ $showSeats->trains_id }}
                                         </td>
-
-
-
+                                        <td class="px-4 py-3">
+                                            {{ $showSeats->coaches_id }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $showSeats->total }}
+                                        </td>
                                     </tr>
-
+                                    @endforeach
 
                                 </tbody>
                             </table>

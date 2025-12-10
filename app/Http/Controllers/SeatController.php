@@ -7,6 +7,7 @@ use App\Models\Coach;
 use App\Models\Trains;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SeatController extends Controller
 {
@@ -14,7 +15,12 @@ class SeatController extends Controller
     {
         $showCoach = Coach::get();
         $showTrain = Trains::get();
-        return view("admin.seats", compact("showCoach", "showTrain"));
+
+        $showSeat =  $showSeat = Seat::select("trains_id", "coaches_id",  DB::raw("count(seat_no) as total"))
+            ->groupBy("coaches_id", "trains_id")
+            ->get();
+
+        return view("admin.seats", compact("showCoach", "showTrain", "showSeat"));
     }
     public function store(Request $re)
     {

@@ -1,6 +1,12 @@
 
 $(document).ready(function () {
 
+    var dd = new Date();
+    var formatedDD = (dd.getFullYear() + "-" + (dd.getMonth() + 1) + "-" + dd.getDate())
+    console.log(formatedDD);
+    $("#travelDate").attr("min", formatedDD);
+
+
     $("#populatedDeparture").on("change", function (e) {
         e.preventDefault();
         var id = $(this).val();

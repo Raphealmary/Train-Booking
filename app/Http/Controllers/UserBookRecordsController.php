@@ -49,8 +49,8 @@ class UserBookRecordsController extends Controller
 
         if ($data) {
             $pdf = PDF::loadView("printTicket", compact("data"));
-            return $pdf->stream("ticket.pdf");
-            //return $pdf->download("ticket.pdf");
+            //return $pdf->stream("ticket.pdf");
+            return $pdf->download("ticket.pdf");
         } else {
             return back()->with(["type" => "error", "msg" => "Ticket receipt not Found"]);
         }

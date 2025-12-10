@@ -99,7 +99,10 @@
                     <div>
                         <label class="block w-full text-gray-700 mb-2">Date</label>
                         <div class="relative">
-                            <input id="travelDate" name="date" data-csrf-token="{{ csrf_token() }}" required type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
+                            <script>
+
+                            </script>
+                            <input id="travelDate" min="" max="" name="date" data-csrf-token="{{ csrf_token() }}" required type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-0 ring-0 focus:border-primary focus:ring-primary">
                             <i class="fas fa-calendar-alt absolute right-3 top-3 text-gray-400"></i>
                         </div>
                     </div>
