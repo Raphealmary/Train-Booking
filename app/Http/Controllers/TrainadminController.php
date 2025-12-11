@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trainadmin;
+use App\Models\UserBookRecords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,12 @@ class TrainadminController extends Controller
     }
     public function admindashboard()
     {
-        return view("admin.dashboard");
+        $shows = UserBookRecords::with("route2")
+            ->with("route")
+            ->orderBy("created_at","desc")
+            ->paginate(4);
+
+        return view('admin.dashboard', compact("shows"));
     }
     public function logout(Request $re)
     {

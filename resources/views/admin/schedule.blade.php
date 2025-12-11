@@ -134,9 +134,13 @@
                                 <thead>
                                     <tr class="text-xs font-semibold tracking-wide text-left text-white uppercase border-b dark:border-gray-700  dark:text-white bg-purple-600">
                                         <th class="px-4 py-3">id</th>
+                                        <th class="px-4 py-3">Departure</th>
+                                        <th class="px-4 py-3">Destination</th>
+                                        <th class="px-4 py-3">Distance</th>
                                         <th class="px-4 py-3">Trains</th>
-                                        <th class="px-4 py-3">Coach Type</th>
-                                        <th class="px-4 py-3">Total Seats</th>
+                                        <th class="px-4 py-3">Departure Time</th>
+                                        <th class="px-4 py-3">Arrival Time</th>
+                                        <th class="px-4 py-3">Price</th>
 
 
                                     </tr>
@@ -145,19 +149,36 @@
                                     @php
                                     $p=1;
                                     @endphp
+                                    @foreach ($showSchedule as $showSchedules)
+
 
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3">
                                             {{ $p++ }}
                                         </td>
                                         <td class="px-4 py-3">
-
+                                            {{ $showSchedules->route2->journey_route }}
                                         </td>
-
-
-
+                                        <td class="px-4 py-3">
+                                            {{ $showSchedules->route->journey_route }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $showSchedules->distance }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ ucfirst($showSchedules->train->name) }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $showSchedules->departure }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $showSchedules->arrival }}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            {{ $showSchedules->price }}
+                                        </td>
                                     </tr>
-
+                                    @endforeach
 
                                 </tbody>
                             </table>

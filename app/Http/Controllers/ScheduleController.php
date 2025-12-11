@@ -18,7 +18,13 @@ class ScheduleController extends Controller
     {
         $showRoute = Route::get();
         $showTrain = Trains::get();
-        return view("admin.schedule", compact("showRoute", "showTrain",));
+        $showSchedule = Schedule::with("route")
+        ->with("route2")
+        ->with("train")
+        ->paginate(5);
+
+        //return $showSchedule;
+        return view("admin.schedule", compact("showRoute", "showTrain", "showSchedule"));
     }
 
     public function store(Request   $re)

@@ -34,5 +34,6 @@ Route::middleware(["adminSecure"])->group(function () {
         Route::post("/route", [RouteController::class, "store"])->name("routeStore");
         Route::get("/logout", [TrainadminController::class, "logout"])->name("logout");
         Route::get("/bookings", [UserBookRecordsController::class, "bookings"])->name("bookings");
+        Route::get("/users", [UserBookRecordsController::class, "users"])->name("users");
     });
 });

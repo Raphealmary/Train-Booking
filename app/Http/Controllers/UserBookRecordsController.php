@@ -8,6 +8,7 @@ use App\Models\Coach;
 use App\Models\UserBookRecords;
 use App\Models\Schedule;
 use App\Models\Seat;
+use App\Models\User;
 use App\Models\Route;
 use Exception;
 use Illuminate\Http\Request;
@@ -146,5 +147,12 @@ class UserBookRecordsController extends Controller
             ->get();
 
         return view('admin.bookings', compact("shows"));
+    }
+
+    function users()
+    {
+        $showUsers = User::get();
+
+        return view("admin.allUsers", compact("showUsers"));
     }
 }
