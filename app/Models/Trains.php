@@ -12,4 +12,6 @@ class Trains extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+    // 
+
 }

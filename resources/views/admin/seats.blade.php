@@ -145,10 +145,10 @@
                                             {{ $p++ }}
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $showSeats->trains_id }}
+                                            {{ ucFirst($showSeats->train->name)}}
                                         </td>
                                         <td class="px-4 py-3">
-                                            {{ $showSeats->coaches_id }}
+                                            {{ ucFirst($showSeats->coach->coach_type) }}
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $showSeats->total }}
@@ -158,10 +158,13 @@
 
                                 </tbody>
                             </table>
+
                         </div>
+                        <p class="mt-8">{{ $showSeat->links() }}</p>
 
                     </div>
                 </div>
+
             </main>
         </div>
     </div>

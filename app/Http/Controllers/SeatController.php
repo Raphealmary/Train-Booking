@@ -16,10 +16,11 @@ class SeatController extends Controller
         $showCoach = Coach::get();
         $showTrain = Trains::get();
 
-        $showSeat =  $showSeat = Seat::select("trains_id", "coaches_id",  DB::raw("count(seat_no) as total"))
+        $showSeat =  $showSeat = Seat::with("train")->with("coach")->select("trains_id", "coaches_id",  DB::raw("count(seat_no) as total"))
             ->groupBy("coaches_id", "trains_id")
-            ->get();
-
+            ->paginate(5);
+        //->get();
+        //return $showSeat;
         return view("admin.seats", compact("showCoach", "showTrain", "showSeat"));
     }
     public function store(Request $re)
@@ -30,6 +31,16 @@ class SeatController extends Controller
             "seat_no" => ["integer", "required"],
             "index" => ["alpha", "required"],
         ]);
+
+        $checkWhere = Seat::where("trains_id", $show["trains_id"])
+            ->where("coaches_id", $show["coaches_id"])
+            ->where("seat_no", $show["seat_no"]);
+        if ($checkWhere) {
+            return back()->with([
+                "type" => "error",
+                "msg" => "Already Inserted Seats"
+            ]);
+        }
         try {
 
             $range = range(1, $show["seat_no"]);

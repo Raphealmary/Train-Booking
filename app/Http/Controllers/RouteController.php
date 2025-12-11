@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 class RouteController extends Controller
 {
     public function index()
+
     {
-        return view("admin.routes");
+        $showRoutes = Route::paginate(5);
+        return view("admin.routes", compact("showRoutes"));
     }
     public function store(Request $re)
     {

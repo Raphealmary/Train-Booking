@@ -82,9 +82,9 @@
                                 <thead>
                                     <tr class="text-xs font-semibold tracking-wide text-left text-white uppercase border-b dark:border-gray-700  dark:text-white bg-purple-600">
                                         <th class="px-4 py-3">id</th>
-                                        <th class="px-4 py-3">Trains</th>
+
                                         <th class="px-4 py-3">Coach Type</th>
-                                        <th class="px-4 py-3">Total Seats</th>
+                                        <th class="px-4 py-3">Date Created</th>
 
 
                                     </tr>
@@ -93,20 +93,24 @@
                                     @php
                                     $p=1;
                                     @endphp
+                                    @foreach ($showCoach as $showCoachs)
+
 
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3">
                                             {{ $p++ }}
                                         </td>
                                         <td class="px-4 py-3">
-
+                                            {{ ucfirst($showCoachs->coach_type) }}
                                         </td>
 
-
+                                        <td class="px-4 py-3">
+                                            {{ $showCoachs->created_at->format("F d, Y, H:i A") }}
+                                        </td>
 
                                     </tr>
 
-
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

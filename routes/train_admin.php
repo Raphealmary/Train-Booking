@@ -6,6 +6,7 @@ use App\Http\Controllers\CoachController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\UserBookRecordsController;
 use App\Models\Seat;
 use Illuminate\Support\Facades\Route;
 
@@ -32,5 +33,6 @@ Route::middleware(["adminSecure"])->group(function () {
         Route::get("/route", [RouteController::class, "index"])->name("route");
         Route::post("/route", [RouteController::class, "store"])->name("routeStore");
         Route::get("/logout", [TrainadminController::class, "logout"])->name("logout");
+        Route::get("/bookings", [UserBookRecordsController::class, "bookings"])->name("bookings");
     });
 });

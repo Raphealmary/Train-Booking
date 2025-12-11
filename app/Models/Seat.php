@@ -10,10 +10,10 @@ class Seat extends Model
 
     public function coach()
     {
-        return $this->belongsTo(Coach::class);
+        return $this->belongsTo(Coach::class, "coaches_id");
     }
     public function train()
     {
-        return $this->belongsTo(Trains::class);
+        return $this->belongsTo(Trains::class, "trains_id");
     }
 }

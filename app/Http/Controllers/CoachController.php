@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Trains;
 use App\Models\Coach;
 use Exception;
+use Illuminate\Support\Carbon;
 
 class CoachController extends Controller
 {
     public function index()
     {
-        //$showTrain = Trains::orderBy("name")->get();
-        return view("admin.coach");
+        $showCoach = Coach::orderBy("coach_type")->get();
+        return view("admin.coach", compact("showCoach"));
     }
     public function store(Request $re)
     {

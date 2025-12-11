@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserBookRecordsController extends Controller
 {
@@ -136,5 +137,14 @@ class UserBookRecordsController extends Controller
                 "msg" => "Error opps Occured $e"
             ]);
         };
+    }
+
+    function bookings()
+    {
+        $shows = UserBookRecords::with("route2")
+            ->with("route")
+            ->get();
+
+        return view('admin.bookings', compact("shows"));
     }
 }

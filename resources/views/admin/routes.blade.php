@@ -43,7 +43,7 @@
                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                             placeholder="Zambia-Eastern-Chipata" />
                                     </label>
-                                  
+
 
 
                                 </div>
@@ -73,9 +73,9 @@
                                 <thead>
                                     <tr class="text-xs font-semibold tracking-wide text-left text-white uppercase border-b dark:border-gray-700  dark:text-white bg-purple-600">
                                         <th class="px-4 py-3">id</th>
-                                        <th class="px-4 py-3">Trains</th>
-                                        <th class="px-4 py-3">Coach Type</th>
-                                        <th class="px-4 py-3">Total Seats</th>
+
+                                        <th class="px-4 py-3">All Journey Routes</th>
+                                        <th class="px-4 py-3">Created At</th>
 
 
                                     </tr>
@@ -84,24 +84,28 @@
                                     @php
                                     $p=1;
                                     @endphp
+                                    @foreach ($showRoutes as $showRoutess)
+
 
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3">
                                             {{ $p++ }}
                                         </td>
                                         <td class="px-4 py-3">
-
+                                            {{ $showRoutess->journey_route }}
                                         </td>
 
-
+                                        <td class="px-4 py-3">
+                                            {{ $showRoutess->created_at->format("F d, Y, H:i A") }}
+                                        </td>
 
                                     </tr>
-
+                                    @endforeach
 
                                 </tbody>
                             </table>
                         </div>
-
+                        <p class="mt-8">{{ $showRoutes->links() }}</p>
                     </div>
                 </div>
             </main>

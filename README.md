@@ -1,3 +1,5 @@
+## RailExpress Train Built with Laravel 12
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -6,6 +8,10 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+
+## RailExpress Train
+
+Scroll Down for RailExpress Train Application setup Guide 👍
 
 ## About Laravel
 
@@ -59,3 +65,53 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## RailExpress Setup
+
+1. Clone the repo 
+2. run the following (install NPM and COMPOSER packages)
+
+```sh
+npm install
+
+```
+
+```sh
+composer install
+
+```
+3. Start your server php artisan serve and your database
+
+3. import db from clone directory "train_booking.sql" to Mysql (phpmyadmin or any administration tool)
+    then in your browser the user login (find user login email in admin panel)
+    password: 12345678
+    
+```sh
+http://127.0.0.1:8000/login
+
+```
+4. Url for Admin Management
+ Email: admin@railexpress.co
+ password:12345
+```sh
+http://127.0.0.1:8000/admin/login
+
+```
+* Admin Login
+
+<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="git-img/admin.PNG" width="400"></a></p>
+
+* Ticket Receipt
+
+<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="git-img/receipt.PNG" width="400"></a></p>
+
+* User Login Screen
+
+<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="git-img/users.PNG" width="400"></a></p>
+
+## Application Stack
+
+**Backend:** Laravel 12.x
+**Dataabase:** Mysql
+**Frontend Layout/Styling:** Blade/Tailwind css
+**Frontend Logic:** Javascript/Jquery

@@ -171,7 +171,8 @@
         <!-- Barcode -->
         <div class="barcode">
             <!-- Replace with your Base64 barcode -->
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA" width="150">
+
+            <img src="data:image/png;base64,{{ base64_encode(QrCode::size(100)->generate( $data->booking_id )) }}" width="150">
             <div class="small">{{ $data->booking_id }}</div>
         </div>
 
