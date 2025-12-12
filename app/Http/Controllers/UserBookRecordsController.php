@@ -98,7 +98,7 @@ class UserBookRecordsController extends Controller
                 "msg" => "Error Evaluating Price"
             ]);
         }
-
+        
         try {
             $updateShow = UserBookRecords::create([
                 "users_id" => Auth::user()->id,
@@ -135,7 +135,7 @@ class UserBookRecordsController extends Controller
 
             return redirect()->back()->with([
                 "type" => "error",
-                "msg" => "Error opps Occured $e"
+                "msg" => "Error opps Occured"
             ]);
         };
     }
