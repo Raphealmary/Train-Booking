@@ -2,7 +2,7 @@
  * For usage, visit Chart.js docs https://www.chartjs.org/docs/latest/
  */
 const lineConfig = {
-  type: 'line',
+  type: 'bar',
   data: {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [

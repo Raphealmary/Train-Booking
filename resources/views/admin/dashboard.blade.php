@@ -43,10 +43,10 @@
               </div>
               <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                  Total Bookings
+                  Total Users
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  6389
+                  {{$totalUsers}}
                 </p>
               </div>
             </div>
@@ -59,10 +59,10 @@
               </div>
               <div>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                  Today's Trains
+                  Account Balance
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  35
+                  {{"N ".number_format($totalPrice,2) }}
                 </p>
               </div>
             </div>
@@ -78,7 +78,7 @@
                   Available Seats
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  2376
+                  {{ $totalSeats }}
                 </p>
               </div>
             </div>
@@ -94,7 +94,7 @@
                   Recent Bookings
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                  35
+                  {{$totalBookings}}
                 </p>
               </div>
             </div>
@@ -128,9 +128,9 @@
                         <!-- Avatar with inset shadow -->
 
                         <div>
-                          <p class="font-semibold">Hans Burger</p>
+                          <p class="font-semibold">{{ $show->fullname }}</p>
                           <p class="text-xs text-gray-600 dark:text-gray-400">
-                            Developer@hack.com
+                            RailExpress.co
                           </p>
                         </div>
                       </div>
@@ -146,7 +146,9 @@
                         Approved
                       </span>
                     </td>
-
+                    <td class="px-4 py-3 text-sm">
+                      {{ $show->created_at }}
+                    </td>
                     <td class="px-4 py-3 text-sm">
                       <form action="{{ route("print") }}" method="post">
                         @csrf
@@ -184,38 +186,14 @@
                 Revenue
               </h4>
               <canvas id="pie"></canvas>
-              <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                <!-- Chart legend -->
-                <div class="flex items-center">
-                  <span class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"></span>
-                  <span>Shirts</span>
-                </div>
-                <div class="flex items-center">
-                  <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                  <span>Shoes</span>
-                </div>
-                <div class="flex items-center">
-                  <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                  <span>Bags</span>
-                </div>
-              </div>
+
             </div>
             <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
               <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
                 Traffic
               </h4>
               <canvas id="line"></canvas>
-              <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                <!-- Chart legend -->
-                <div class="flex items-center">
-                  <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                  <span>Organic</span>
-                </div>
-                <div class="flex items-center">
-                  <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                  <span>Paid</span>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ use App\Models\Coach;
 use App\Models\Seat;
 use App\Models\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Reservation extends Controller
 {
@@ -77,5 +78,16 @@ class Reservation extends Controller
         } else {
             return redirect("/login");
         }
+    }
+
+
+    function chartSeat()
+    {
+
+        $showSeat = Seat::with("train")->with("coach")->select("trains_id", "coaches_id",  DB::raw("count(seat_no) as total"))
+            ->groupBy("coaches_id", "trains_id")
+            ->get();
+
+        return $showSeat;
     }
 }

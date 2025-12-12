@@ -1,6 +1,6 @@
 <x-train-admin.layout>
     @slot("title")
-    {{ "Route | Admin" }}
+    {{ "Bookings | Admin" }}
 
     @endslot
 

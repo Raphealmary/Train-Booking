@@ -82,7 +82,8 @@ composer install
 ```
 3. Start your server php artisan serve and your database
 
-3. import db from clone directory "train_booking.sql" to Mysql (phpmyadmin or any administration tool)
+3. import db from clone directory "train_booking.sql" to Mysql (phpmyadmin or any administration     
+    Management database tool)
     then in your browser the user login (find user login email in admin panel)
     password: 12345678
     

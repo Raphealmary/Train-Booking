@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trainadmin;
+use App\Models\Trains;
+use App\Models\Seat;
+use App\Models\User;
 use App\Models\UserBookRecords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -33,12 +36,16 @@ class TrainadminController extends Controller
     }
     public function admindashboard()
     {
+        $totalUsers = User::count();
+        $totalSeats = Seat::count();
+        $totalPrice = UserBookRecords::selectRaw("SUM(REPLACE(priceBooking,',','')) as total")->value("total");
+        $totalBookings = UserBookRecords::count();
         $shows = UserBookRecords::with("route2")
             ->with("route")
-            ->orderBy("created_at","desc")
-            ->paginate(4);
+            ->orderBy("created_at", "desc")
+            ->paginate(3);
 
-        return view('admin.dashboard', compact("shows"));
+        return view('admin.dashboard', compact("shows", "totalBookings", "totalSeats", "totalPrice", "totalUsers"));
     }
     public function logout(Request $re)
     {

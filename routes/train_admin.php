@@ -6,6 +6,7 @@ use App\Http\Controllers\CoachController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\Reservation;
 use App\Http\Controllers\UserBookRecordsController;
 use App\Models\Seat;
 use Illuminate\Support\Facades\Route;
@@ -16,8 +17,8 @@ Route::prefix("admin")->group(function () {
     Route::get("/login", [TrainadminController::class, "login"])->name("adminlogin");
     Route::post("/login", [TrainadminController::class, "postlogin"])->name("postlogin");
 });
-
-
+//getChatPopulation
+Route::get("/adminget-chart-seat", [Reservation::class, "chartSeat"]);
 //admin authenticated
 Route::middleware(["adminSecure"])->group(function () {
     Route::prefix("admin")->name("admin")->group(function () {
