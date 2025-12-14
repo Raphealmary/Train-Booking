@@ -100,19 +100,19 @@ http://127.0.0.1:8000/admin/login
 ```
 * Admin Login
 
-<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="git-img/admin.PNG" width="400"></a></p>
+<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="/git-img/admin.PNG" width="400"></a></p>
 
 * Ticket Receipt
 
-<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="git-img/receipt.PNG" width="400"></a></p>
+<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="/git-img/receipt.PNG" width="400"></a></p>
 
 * User Login Screen
 
-<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="git-img/users.PNG" width="400"></a></p>
+<p align="center"><a href="https://github.com/Raphealmary" target="_blank"><img src="/git-img/users.PNG" width="400"></a></p>
 
 ## Application Stack
 
-**Backend:** Laravel 12.x
-**Dataabase:** Mysql
-**Frontend Layout/Styling:** Blade/Tailwind css
-**Frontend Logic:** Javascript/Jquery
+- **Backend:** Laravel 12.x
+- **Dataabase:** Mysql
+- **Frontend Layout/Styling:** Blade/Tailwind css
+- **Frontend Logic:** Javascript/Jquery
