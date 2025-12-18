@@ -34,4 +34,5 @@ class CoachController extends Controller
             ]);
         }
     }
+
 }

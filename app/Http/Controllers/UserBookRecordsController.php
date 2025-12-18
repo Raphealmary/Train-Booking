@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
+
 class UserBookRecordsController extends Controller
 {
 
@@ -79,7 +80,8 @@ class UserBookRecordsController extends Controller
             "passengerBooking" => ["required", "integer"],
             "fullname" => ["required"],
             "phone" => ["required"],
-            "email" => ["required", "email"]
+            "email" => ["required", "email"],
+            "payment" => ["required"],
         ]);
 
         $result = Schedule::where("origin_id", $valid["departBooking"])
@@ -98,7 +100,7 @@ class UserBookRecordsController extends Controller
                 "msg" => "Error Evaluating Price"
             ]);
         }
-        
+
         try {
             $updateShow = UserBookRecords::create([
                 "users_id" => Auth::user()->id,
@@ -118,8 +120,15 @@ class UserBookRecordsController extends Controller
                 "phone" => $valid["phone"],
                 "email" => $valid["email"],
 
+
             ]);
             if ($updateShow) {
+
+                if ($valid["payment"] === "paystack") {
+                    return "paystack";
+                } else if ($valid["payment"] === "flutterwave") {
+                    return "flutterwave";
+                }
                 Seat::where("seat_no", $valid["seatBooking"])->update(["status" => "booked"]);
                 return redirect()->back()->with([
                     "type" => "success",
