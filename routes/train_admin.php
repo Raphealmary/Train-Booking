@@ -7,6 +7,7 @@ use App\Http\Controllers\SeatController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Reservation;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserBookRecordsController;
 use App\Models\Seat;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,7 @@ Route::middleware(["adminSecure"])->group(function () {
         Route::get("/logout", [TrainadminController::class, "logout"])->name("logout");
         Route::get("/bookings", [UserBookRecordsController::class, "bookings"])->name("bookings");
         Route::get("/users", [UserBookRecordsController::class, "users"])->name("users");
+        Route::get("/payment", [PaymentController::class, "index"])->name("pay");
+        Route::post("/paymentStore", [PaymentController::class, "store"])->name("payStore");
     });
 });

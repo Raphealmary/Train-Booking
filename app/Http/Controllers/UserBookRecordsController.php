@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Carbon;
 use App\Models\Trains;
 use App\Models\Coach;
+use App\Models\Payment;
 use App\Models\UserBookRecords;
 use App\Models\Schedule;
 use App\Models\Seat;
@@ -14,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -123,11 +125,25 @@ class UserBookRecordsController extends Controller
 
             ]);
             if ($updateShow) {
-
+                $paySecret = Payment::where("Payment_Type", $valid["payment"])->first();
                 if ($valid["payment"] === "paystack") {
-                    return "paystack";
+                    $response = Http::withHeaders([
+                        "Authorization" => "Bearer " . $paySecret->secret_key
+                    ])->post("https://api.paystack.com/v3/payments", [
+                        "tx_ref" => Str::random(12),
+                        "amount" => $result->price * $valid["passengerBooking"],
+                        "currency" => "NGN",
+                        "redirect_url" => route("callback")
+                    ]);
+
+
+                    return $response;
                 } else if ($valid["payment"] === "flutterwave") {
-                    return "flutterwave";
+                    // $response = Http::withToken($paySecret->secret_key)->post("https://api.flutterwave.com/v3/payments", [
+                    //     "tx_ref" => uniqid(),
+                    //     "amount" => 500,
+                    //     "currency" => "NGN"
+                    // ]);
                 }
                 Seat::where("seat_no", $valid["seatBooking"])->update(["status" => "booked"]);
                 return redirect()->back()->with([
