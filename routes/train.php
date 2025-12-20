@@ -14,5 +14,5 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/reservation", [Reservation::class, "index"])->name("reservationIndex");
     Route::post("/reservationpost", [Reservation::class, "reserve"])->name("reservation");
     Route::get("/get-seat/{coach_id}", [Reservation::class, "getSeat"]);
-    Route::get("/paymentVerify", [PaymentController::class, "callback"])->name("callback");
+    Route::get("/paymentVerify/{params}", [PaymentController::class, "callback"])->name("callback");
 });

@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -126,25 +127,50 @@ class UserBookRecordsController extends Controller
             ]);
             if ($updateShow) {
                 $paySecret = Payment::where("Payment_Type", $valid["payment"])->first();
-                if ($valid["payment"] === "paystack") {
-                    $response = Http::withHeaders([
-                        "Authorization" => "Bearer " . $paySecret->secret_key
-                    ])->post("https://api.paystack.com/v3/payments", [
-                        "tx_ref" => Str::random(12),
-                        "amount" => $result->price * $valid["passengerBooking"],
-                        "currency" => "NGN",
-                        "redirect_url" => route("callback")
+
+                if ($paySecret !== null) {
+
+                    if ($valid["payment"] === "paystack") {
+                        $response = Http::withHeaders([
+                            'Authorization' => 'Bearer ' . Crypt::decryptString($paySecret->secret_key),
+                            'Content-Type'  => 'application/json',
+                        ])->post("https://api.paystack.co/transaction/initialize", [
+                            "reference" => "RailExpress" . Str::random(12),
+                            "amount" => ($result->price * $valid["passengerBooking"]) * 100,
+                            'callback_url' => route("callback", "paystack"),
+                            'email' => $valid["email"],
+
+                        ]);
+
+
+                        return redirect($response["data"]["authorization_url"]);
+                    } else if ($valid["payment"] === "flutterwave") {
+                        $response = Http::withHeaders([
+                            'Authorization' => 'Bearer ' . Crypt::decryptString($paySecret->secret_key),
+                            'Content-Type'  => 'application/json',
+                        ])->post("https://api.flutterwave.com/v3/payments", [
+                            "tx_ref" => "RailExpress" . Str::random(12),
+                            "currency" => "NGN",
+                            "amount" => ($result->price * $valid["passengerBooking"]),
+                            'redirect_url' => route("callback", "flutterwave"),
+                            "customer" => [
+                                "email" => $valid["email"]
+
+                            ],
+
+                        ]);
+
+
+                        return redirect($response["data"]["link"]);
+                    }
+                } else {
+                    return redirect()->back()->with([
+                        "type" => "error",
+                        "msg" => "(Add Payment Api key from Admin)"
                     ]);
-
-
-                    return $response;
-                } else if ($valid["payment"] === "flutterwave") {
-                    // $response = Http::withToken($paySecret->secret_key)->post("https://api.flutterwave.com/v3/payments", [
-                    //     "tx_ref" => uniqid(),
-                    //     "amount" => 500,
-                    //     "currency" => "NGN"
-                    // ]);
                 }
+
+
                 Seat::where("seat_no", $valid["seatBooking"])->update(["status" => "booked"]);
                 return redirect()->back()->with([
                     "type" => "success",

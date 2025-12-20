@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->String("Payment_Type");
-            $table->String("secret_key");
+            // $table-> String("secret_key");
+            $table->longText("secret_key");
             $table->timestamps();
         });
     }

@@ -111,7 +111,7 @@
                                         </td>
 
                                         <td class="px-4 py-3">
-                                            {{ Str::substrReplace(Crypt::decryptString($showPays->secret_key), "******",2,3) }}
+                                            {{ Str::substrReplace(Crypt::decryptString($showPays->secret_key), "******",2,10) }}
                                         </td>
                                         <td class="px-4 py-3">
                                             {{ $showPays->created_at->format("F d, Y, H:i A") }}
