@@ -137,7 +137,7 @@
         <table>
             <tr>
                 <td>Base Fare</td>
-                <td>{{ $data->orignalPriceBooking }}</td>
+                <td>{{ number_format($data->orignalPriceBooking ,00)}}</td>
             </tr>
 
             <tr>
@@ -146,7 +146,7 @@
             </tr>
             <tr>
                 <td><strong>Total Paid</strong></td>
-                <td><strong>{{ $data->priceBooking }}</strong></td>
+                <td><strong>{{ number_format($data->priceBooking,00) }}</strong></td>
             </tr>
         </table>
 
@@ -164,7 +164,7 @@
         <table>
             <tr>
                 <td><strong>Status:</strong></td>
-                <td>CONFIRMED</td>
+                <td>{{ ucfirst($data->status) }}</td>
             </tr>
         </table>
 

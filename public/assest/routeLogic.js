@@ -71,12 +71,16 @@ $(document).ready(function () {
                     $("#d-time").html(e.departure);
                     $("#timeDepartBooking").val(e.departure);
                     //price
-                    $("#price").html(e.price);
+
+                    const g = new Intl.NumberFormat("en-US").format(e.price);
+                    const g2 = new Intl.NumberFormat("en-US").format(e.originalPrice);
+                    console.log(g);
+                    $("#price").html(g);
                     $("#priceBooking").val(e.price);
                     //orginalPrice
                     $("#originalPrice").html(e.originalPrice);
                     $("#orignalPriceBooking").val(e.originalPrice);
-
+                    $("#originalPrice").html(g2);
                     //passenger
                     $("#p-passenger").html(e.passenger);
                     $("#passengerBooking").val(e.passenger);

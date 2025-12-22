@@ -23,6 +23,9 @@ class UserBookRecords extends Model
         "fullname",
         "phone",
         "email",
+        "reference",
+        "status",
+        "Type"
 
     ];
 

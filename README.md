@@ -116,3 +116,13 @@ http://127.0.0.1:8000/admin/login
 - **Dataabase:** Mysql
 - **Frontend Layout/Styling:** Blade/Tailwind css
 - **Frontend Logic:** Javascript/Jquery
+
+
+## Payment APi
+
+- Add your Own Api Key from Admin Payment Manager for Paystack or flutterwave or use the freePay for payment
+
+
+## Contribution
+
+- **contact:** raphealmary772@gmail.com 

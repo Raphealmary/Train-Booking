@@ -64,11 +64,11 @@ class Reservation extends Controller
                     "trainName" => ucfirst($v->train->name),
                     "start" => $v->route2->journey_route,
                     "end" => $v->route->journey_route,
-                    "price" => number_format(($v["price"] * $show["passenger"]), 00),
+                    "price" => ($v["price"] * $show["passenger"]) . ".00",
                     "arrival" => Carbon::parse($v["arrival"])->format("H:i A"),
                     "departure" => Carbon::parse($v["departure"])->format("H:i A"),
                     "passenger" => $show["passenger"],
-                    "originalPrice" => number_format($v["price"], 00),
+                    "originalPrice" => $v["price"],
                     "date" => Carbon::parse($show["travelDate"])->format("F d, Y"),
                 ];
             }

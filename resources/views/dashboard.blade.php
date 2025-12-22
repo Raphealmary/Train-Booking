@@ -14,7 +14,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto sm:px-6">
 
 
             <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default bg-white rounded-2xl">
@@ -27,6 +27,9 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 font-medium">
                                 Booking ID
+                            </th>
+                            <th scope="col" class="px-6 py-3 font-medium">
+                                Status
                             </th>
                             <th scope="col" class="px-6 py-3 font-medium">
                                 Train
@@ -63,7 +66,22 @@
                             <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                                 {{ $show->booking_id }}
                             </th>
+                            <th scope="row" class=" font-medium text-heading whitespace-nowrap">
+                                @if ( $show->status == "paid" )
 
+
+                                <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                    Approved / Paid
+                                </span>
+
+
+                                @else
+                                <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+                                    Not Paid / Pending
+                                </span>
+
+                                @endif
+                            </th>
                             <td class="px-6 py-4">
                                 {{ $show->trainBooking }}
                             </td>
@@ -80,20 +98,32 @@
                                 {{ $show->timeDepartBooking . " | ". $show->timeArrivalBooking}}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $show->passengerBooking. "x" . $show->orignalPriceBooking ."=".  $show->priceBooking }}
+                                {{ $show->passengerBooking. "x" .number_format( $show->orignalPriceBooking,00) ."=". number_format($show->priceBooking,00) }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ $show->dateBooking }}
                             </td>
                             <td class="px-6 py-4 text-right">
+                                <div>
+                                    @if ($show->status != "paid")
+                                    <form action="{{ route("callback",$show->Type) }}" method="get">
+                                        @csrf
+                                        <input type="hidden" name="reference" value="{{ $show->reference }}">
+                                        <button type="submit"
+                                            class="font-medium bg-red-600 text-white px-4 py-2 rounded-lg text-fg-brand hover:underline">ReQuery
+                                        </button>
+                                    </form>
+                                    @endif
 
-                                <form action="{{ route("print") }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="bookingid" value="{{ $show->booking_id  }}">
-                                    <button type="submit"
-                                        class="font-medium bg-green-600 text-white px-4 py-2 rounded-lg text-fg-brand hover:underline">Print
-                                    </button>
-                                </form>
+                                    <form action="{{ route("print") }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="bookingid" value="{{ $show->booking_id  }}">
+                                        <button type="submit"
+                                            class="font-medium bg-green-600 text-white px-4 py-2 rounded-lg text-fg-brand hover:underline">Print
+                                        </button>
+                                    </form>
+
+                                </div>
                             </td>
                         </tr>
 
@@ -112,6 +142,7 @@
                         @endif
                     </tbody>
                 </table>
+                {{ $shows->links() }}
             </div>
 
 

@@ -37,7 +37,7 @@ class UserBookRecordsController extends Controller
         $shows = UserBookRecords::where("users_id", $user)
             ->with("route2")
             ->with("route")
-            ->get();
+            ->paginate(6);
 
         return view('dashboard', compact("shows"));
     }
@@ -91,77 +91,145 @@ class UserBookRecordsController extends Controller
             ->where("destination_id", $valid["arrivalBooking"])
             ->first();
 
-        if (number_format($result->price, 00) !== $valid["orignalPriceBooking"]) {
+        if ($result->price !== $valid["orignalPriceBooking"]) {
             return redirect()->back()->with([
                 "type" => "warning",
                 "msg" => "Error Evaluating price"
             ]);
         }
-        if (number_format(($result->price * $valid["passengerBooking"]), 00) !== $valid["priceBooking"]) {
+        if (($result->price * $valid["passengerBooking"]) . ".00" !== $valid["priceBooking"]) {
             return redirect()->back()->with([
                 "type" => "warning",
                 "msg" => "Error Evaluating Price"
             ]);
         }
-
         try {
-            $updateShow = UserBookRecords::create([
-                "users_id" => Auth::user()->id,
-                "booking_id" => Str::upper(Str::random(4)) . rand(2000, 9999),
-                "trainBooking" => $valid["trainBooking"],
-                "coachBooking" => $valid["coachBooking"],
-                "seatBooking" => $valid["seatBooking"],
-                "departBooking" => $valid["departBooking"],
-                "arrivalBooking" => $valid["arrivalBooking"],
-                "timeArrivalBooking" => $valid["timeArrivalBooking"],
-                "timeDepartBooking" => $valid["timeDepartBooking"],
-                "priceBooking" => $valid["priceBooking"],
-                "orignalPriceBooking" => $valid["orignalPriceBooking"],
-                "dateBooking" => $valid["dateBooking"],
-                "passengerBooking" => $valid["passengerBooking"],
-                "fullname" => $valid["fullname"],
-                "phone" => $valid["phone"],
-                "email" => $valid["email"],
-
-
-            ]);
-            if ($updateShow) {
-                $paySecret = Payment::where("Payment_Type", $valid["payment"])->first();
-
+            $paySecret = Payment::where("Payment_Type", $valid["payment"])->first();
+            if ($valid["payment"] === "free") {
+                $updateRecord = UserBookRecords::create([
+                    "users_id" => Auth::user()->id,
+                    "booking_id" => Str::upper(Str::random(4)) . rand(2000, 9999),
+                    "trainBooking" => $valid["trainBooking"],
+                    "coachBooking" => $valid["coachBooking"],
+                    "seatBooking" => $valid["seatBooking"],
+                    "departBooking" => $valid["departBooking"],
+                    "arrivalBooking" => $valid["arrivalBooking"],
+                    "timeArrivalBooking" => $valid["timeArrivalBooking"],
+                    "timeDepartBooking" => $valid["timeDepartBooking"],
+                    "priceBooking" => $valid["priceBooking"],
+                    "orignalPriceBooking" => $valid["orignalPriceBooking"],
+                    "dateBooking" => $valid["dateBooking"],
+                    "passengerBooking" => $valid["passengerBooking"],
+                    "fullname" => $valid["fullname"],
+                    "phone" => $valid["phone"],
+                    "email" => $valid["email"],
+                    "reference" => "RailExpress" . Str::random(12),
+                    "status" => "paid",
+                    "Type" => "FreePay"
+                ]);
+                if ($updateRecord) {
+                    Seat::where("seat_no", $valid["seatBooking"])->update(["status" => "booked"]);
+                    return redirect()->back()->with([
+                        "type" => "success",
+                        "msg" => "Order is Booked for  {$valid['trainBooking']}  {$valid['coachBooking']} 'seat' {$valid['seatBooking']}"
+                    ]);
+                } else {
+                    return redirect()->back()->with([
+                        "type" => "error",
+                        "msg" => "Error opps Occured in Free Payment"
+                    ]);
+                }
+            } else {
                 if ($paySecret !== null) {
-
                     if ($valid["payment"] === "paystack") {
+                        $reference = "RailExpress" . Str::random(12);
                         $response = Http::withHeaders([
                             'Authorization' => 'Bearer ' . Crypt::decryptString($paySecret->secret_key),
                             'Content-Type'  => 'application/json',
                         ])->post("https://api.paystack.co/transaction/initialize", [
-                            "reference" => "RailExpress" . Str::random(12),
+                            "reference" => $reference,
                             "amount" => ($result->price * $valid["passengerBooking"]) * 100,
-                            'callback_url' => route("callback", "paystack"),
+                            'callback_url' => route("callback", "PayStack"),
                             'email' => $valid["email"],
 
                         ]);
 
-
-                        return redirect($response["data"]["authorization_url"]);
+                        $updateRecord = UserBookRecords::create([
+                            "users_id" => Auth::user()->id,
+                            "booking_id" => Str::upper(Str::random(4)) . rand(2000, 9999),
+                            "trainBooking" => $valid["trainBooking"],
+                            "coachBooking" => $valid["coachBooking"],
+                            "seatBooking" => $valid["seatBooking"],
+                            "departBooking" => $valid["departBooking"],
+                            "arrivalBooking" => $valid["arrivalBooking"],
+                            "timeArrivalBooking" => $valid["timeArrivalBooking"],
+                            "timeDepartBooking" => $valid["timeDepartBooking"],
+                            "priceBooking" => $valid["priceBooking"],
+                            "orignalPriceBooking" => $valid["orignalPriceBooking"],
+                            "dateBooking" => $valid["dateBooking"],
+                            "passengerBooking" => $valid["passengerBooking"],
+                            "fullname" => $valid["fullname"],
+                            "phone" => $valid["phone"],
+                            "email" => $valid["email"],
+                            "reference" => $reference,
+                            "status" => "Pending",
+                            "Type" => "PayStack"
+                        ]);
+                        if ($updateRecord) {
+                            return redirect($response["data"]["authorization_url"]);
+                        } else {
+                            return redirect()->back()->with([
+                                "type" => "error",
+                                "msg" => "Error to Initialize Paystack Payment opps Occured"
+                            ]);
+                        }
                     } else if ($valid["payment"] === "flutterwave") {
+                        $reference = "RailExpress" . Str::random(12);
                         $response = Http::withHeaders([
                             'Authorization' => 'Bearer ' . Crypt::decryptString($paySecret->secret_key),
                             'Content-Type'  => 'application/json',
                         ])->post("https://api.flutterwave.com/v3/payments", [
-                            "tx_ref" => "RailExpress" . Str::random(12),
+                            "tx_ref" =>  $reference,
                             "currency" => "NGN",
                             "amount" => ($result->price * $valid["passengerBooking"]),
-                            'redirect_url' => route("callback", "flutterwave"),
+                            'redirect_url' => route("callback", "Flutterwave"),
                             "customer" => [
-                                "email" => $valid["email"]
+                                "email" => $valid["email"],
+                                "name" => $valid["fullname"]
 
                             ],
 
                         ]);
 
-
-                        return redirect($response["data"]["link"]);
+                        $updateRecord = UserBookRecords::create([
+                            "users_id" => Auth::user()->id,
+                            "booking_id" => Str::upper(Str::random(4)) . rand(2000, 9999),
+                            "trainBooking" => $valid["trainBooking"],
+                            "coachBooking" => $valid["coachBooking"],
+                            "seatBooking" => $valid["seatBooking"],
+                            "departBooking" => $valid["departBooking"],
+                            "arrivalBooking" => $valid["arrivalBooking"],
+                            "timeArrivalBooking" => $valid["timeArrivalBooking"],
+                            "timeDepartBooking" => $valid["timeDepartBooking"],
+                            "priceBooking" => $valid["priceBooking"],
+                            "orignalPriceBooking" => $valid["orignalPriceBooking"],
+                            "dateBooking" => $valid["dateBooking"],
+                            "passengerBooking" => $valid["passengerBooking"],
+                            "fullname" => $valid["fullname"],
+                            "phone" => $valid["phone"],
+                            "email" => $valid["email"],
+                            "reference" => $reference,
+                            "status" => "Pending",
+                            "Type" => "Flutterwave"
+                        ]);
+                        if ($updateRecord) {
+                            return redirect($response["data"]["link"]);
+                        } else {
+                            return redirect()->back()->with([
+                                "type" => "error",
+                                "msg" => "Error to Initialize Flutterwave Payment opps Occured"
+                            ]);
+                        }
                     }
                 } else {
                     return redirect()->back()->with([
@@ -169,24 +237,12 @@ class UserBookRecordsController extends Controller
                         "msg" => "(Add Payment Api key from Admin)"
                     ]);
                 }
-
-
-                Seat::where("seat_no", $valid["seatBooking"])->update(["status" => "booked"]);
-                return redirect()->back()->with([
-                    "type" => "success",
-                    "msg" => "Order is Booked for  {$valid['trainBooking']}  {$valid['coachBooking']} 'seat' {$valid['seatBooking']}"
-                ]);
-            } else {
-                return redirect()->back()->with([
-                    "type" => "error",
-                    "msg" => "Error opps Occured"
-                ]);
             }
         } catch (Exception $e) {
-
+            //return $e;
             return redirect()->back()->with([
                 "type" => "error",
-                "msg" => "Error opps Occured"
+                "msg" => "Error opps Occured (check Internet)"
             ]);
         };
     }
