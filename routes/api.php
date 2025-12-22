@@ -8,12 +8,25 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('hj/login', function () {
+Route::get('api/login', function () {
     return response()->json([
-        'api'=> 'fullAccess'
+        'api' => 'fullAccess'
     ]);
-
 });
 //->middleware('auth:sanctum');
 
+route::post("/re", function (Request $re) {
 
+    $store = $re->validate([
+        "username" => ["required", "alpha"],
+        "password" => ["required"]
+
+    ]);
+
+
+    if ($store["username"] == "Raphealmary") {
+        return "Access" . json_encode($store);
+    } else {
+        return "no result found $re->username";
+    }
+});
