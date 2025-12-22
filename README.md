@@ -123,6 +123,6 @@ http://127.0.0.1:8000/admin/login
 - Add your Own Api Key from Admin Payment Manager for Paystack or flutterwave or use the freePay for payment
 
 
-## Contribution
+## Contribution/Complaints
 
 - **contact:** raphealmary772@gmail.com 
