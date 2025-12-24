@@ -33,6 +33,112 @@
     @endslot
     @endforeach
     @endif
+
+    <!-- preloader -->
+
+    <style>
+        .center-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            visibility: hidden;
+            /* position: fixed;
+            background: red;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 999; */
+            /* display: none; */
+
+        }
+
+        .loader-ball-12 {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .loader-ball-12>div {
+            height: 25px;
+            width: 1px;
+            position: absolute;
+            animation: loader-ball-12-rotate 3.5s linear infinite;
+        }
+
+        .loader-ball-12>div:after {
+            content: "";
+            display: inline-block;
+            top: 30px;
+            height: 7px;
+            width: 7px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .loader-ball-12>div:nth-child(1) {
+            animation-delay: 0.15s;
+        }
+
+        .loader-ball-12>div:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .loader-ball-12>div:nth-child(3) {
+            animation-delay: 0.45s;
+        }
+
+        .loader-ball-12>div:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .loader-ball-12>div:nth-child(5) {
+            animation-delay: 0.75s;
+        }
+
+        .loader-ball-12>div:nth-child(6) {
+            animation-delay: 0.9s;
+        }
+
+        @keyframes loader-ball-12-rotate {
+            30% {
+                transform: rotate(220deg);
+            }
+
+            40% {
+                transform: rotate(450deg);
+                opacity: 1;
+            }
+
+            75% {
+                transform: rotate(720deg);
+                opacity: 1;
+            }
+
+            76% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+    <div id="preloader" class="center-body fixed z-50 inset-0 bg-black bg-opacity-80">
+        <div class="loader-ball-12">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <p class="text-white absolute mt-40">Please wait...</p>
+    </div>
+    <!-- preloader -->
     <!-- Overlay for mobile menu -->
     <div id="overlay" class="overlay fixed inset-0 bg-black bg-opacity-50 z-10"></div>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2025 at 11:49 AM
+-- Generation Time: Dec 24, 2025 at 12:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -210,14 +210,6 @@ CREATE TABLE `payments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`id`, `Payment_Type`, `secret_key`, `created_at`, `updated_at`) VALUES
-(4, 'paystack', 'eyJpdiI6IkhtalhieVBwd0VRQVRNTy9yMm5Wbnc9PSIsInZhbHVlIjoieWphWmczMXlENlMxRUhXcDc0WS9xS3V5MU8zb1o0NlFJeWpLZmxyRDZsYjlPa2lUc3NWRjVBYkkwWFEzSG1Pc2Foa3JSbVgwbWFwWDgwV0FCZzNFNmc9PSIsIm1hYyI6ImQ2NzBmYTA5NzQ5YjY2YjIyOTVlZTc1MTI1NjMxZDZjNjk0OGUxOWFkODY4NDE4OWY0MzBlNWRiZGU1YzQyYTAiLCJ0YWciOiIifQ==', '2025-12-20 16:50:20', '2025-12-20 16:50:20'),
-(6, 'flutterwave', 'eyJpdiI6IjFZRFpjNTFDenBpeTRGWWtrbnpHbHc9PSIsInZhbHVlIjoieGNDWCs5dWFhQk1Vd0toYnl1TVBHRkUxcVFIeVZWVGlJdFova0RwZC9UaG9HSDVyendhNFFrZEJaN0U1SHJzWiIsIm1hYyI6ImQ1OWI1Zjk2ZGJkYTZlYTY0MmNjYTQ2NWIyNzIwYWFkYmE3ZDIzZjE4MzVmZDA2YzgwYTE5NWFiMjViN2UwZDkiLCJ0YWciOiIifQ==', '2025-12-22 07:16:05', '2025-12-22 07:16:05');
-
 -- --------------------------------------------------------
 
 --
@@ -236,6 +228,14 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `personal_access_tokens`
+--
+
+INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\User', 2, 'mobile', '2ce7c0c1a83c9188f3962dc8baccd80684523fd307c6d3e769660aad19f44816', '[\"*\"]', NULL, NULL, '2025-12-22 16:12:40', '2025-12-22 16:12:40'),
+(2, 'App\\Models\\User', 1, 'mobile', '99137319f78ede4513e2b0b6b08344a80e9beafa46f09d9262d994d404c8dc54', '[\"*\"]', '2025-12-22 16:56:24', NULL, '2025-12-22 16:14:58', '2025-12-22 16:56:24');
 
 -- --------------------------------------------------------
 
@@ -494,14 +494,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('6wNC4EGuje5DTDP0dHyKDLlBQTkydOarLSn1zN1n', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiZ0E3bklYZk56M3lJNnYxZTJiOEVCNWdBenRiRnRhcDJ5b09maVUzRCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozMzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3Jlc2VydmF0aW9uIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZXNlcnZhdGlvbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1766400225),
-('h79vHwJMfDPr9zXz9XQDzK5PUlhA0jFhKK79QOiw', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSkRVaFR4dXJPSE5sQnFLVDNNZFNEaU95M21rbmpIZGQ5Skx2NVZTayI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1766393595),
-('ixVPNabwBcwQEINmG0oHRBv0xzd7JWq5O8zzS1H0', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiN1JpMjU5dllqQ205VEJuNGZSSVA2eGlMRHpqb3RSRzBkWW5FVGVrUyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozMzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3Jlc2VydmF0aW9uIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZXNlcnZhdGlvbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1766393018),
-('kCcf3GvLvstJ29jvxPQK8GKlcnhXSIB9JXRxjn5D', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVlZFenU2MkxVOU5sMGhZajBZc3lwVVJXN3BKaFlEU2NUUFBaQTRXZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1766399948),
-('RPKyTy5hxdK9hspa7VGK93KIL3dBaP0lQFckLTb4', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiSk9rVE9iR1lBQklYZUxIVlZjSGZvYmx1aXlyRElrQ3JaMXY1a3VVTSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozMzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3Jlc2VydmF0aW9uIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZXNlcnZhdGlvbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1766393594),
-('V8c2ewjXDHWSeBRGTd0rxYmS5nFnWcljGChmM0qq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiM1BXUHp2THQ4OHVNRFUySkJxb2h1TUk1b05hR3JYTldtV1FNaVFScSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoxMDk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZXNlcnZhdGlvbj9fdG9rZW49Z0E3bklYZk56M3lJNnYxZTJiOEVCNWdBenRiRnRhcDJ5b09maVUzRCZkYXRlPTIwMjUtMTItMzEmcGFzc2VuZ2VyPTEiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoxMDk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZXNlcnZhdGlvbj9fdG9rZW49Z0E3bklYZk56M3lJNnYxZTJiOEVCNWdBenRiRnRhcDJ5b09maVUzRCZkYXRlPTIwMjUtMTItMzEmcGFzc2VuZ2VyPTEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1766399944),
-('yv8DWiclE8m5nvKdeMHt3X7EYPXsTpNg7hf9syyu', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT0R5N0J3b0tUd1NqdUNMdUs1eklqOURmeUdpMUdMUHdrcXhKSDlTYiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1766400234),
-('zrFKrBaIwxUHMWE7ma8Xu5waAUXlSplqroOWA9sE', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVzBqNVhodkthTWhmYk1DZDhSZldoWkYwTzdQcHJSTVd0TE1ocDVkdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1766393019);
+('vuQuA6sGAKGEnuNAmx2qd3hrcTlIlaPySyaOFbJQ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYzNYZVpnOUE2bnh1WTFvWkwyRVpMWDdUcnlSYklacTJEbURmcW50SCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1766426186);
 
 -- --------------------------------------------------------
 
@@ -803,7 +796,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `routes`

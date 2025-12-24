@@ -14,14 +14,20 @@ $(document).ready(function () {
             type: "get",
             url: "/get-route/" + id,
             success: function (response) {
-                //console.log(response);
+                //console.log(response["length"]);
                 let destination = ``;
+
                 response.forEach(e => {
-                    destination += `<option value=${e.destination_id}>${e.route.journey_route}</option>
-                `;
+                    destination += `<option value=${e.destination_id}>${e.route.journey_route}</option>`;
 
                 });
-                $("#populatedDestination").html(destination);
+
+
+                if (response["length"] > 0) {
+                    $("#populatedDestination").html(destination);
+                } else {
+                    $("#populatedDestination").html(`<option value="">Not Available Yet</option>`);
+                }
             }
         });
 
@@ -33,6 +39,12 @@ $(document).ready(function () {
 
     $("#myBookings").on("submit", function (e) {
         e.preventDefault();
+        $("#preloader").css("visibility", "visible");
+        setTimeout(function () {
+            $("#preloader").css("visibility", "hidden");
+        }, 2000)
+
+
         var dataCollected = {
             depart: $("#populatedDeparture").val(),
             destination: $("#populatedDestination").val(),
