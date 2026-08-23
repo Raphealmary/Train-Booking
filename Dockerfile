@@ -11,7 +11,7 @@ RUN install-php-extensions \
     intl \
     bcmath
 
-# Install Node.js 22 + npm
+# Install Node.js and npm
 RUN apt-get update \
     && apt-get install -y ca-certificates curl \
     && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
@@ -20,12 +20,12 @@ RUN apt-get update \
     && npm --version \
     && rm -rf /var/lib/apt/lists/*
 
-# Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# PHP dependencies
+# Install PHP dependencies
 COPY composer.json composer.lock ./
 
 RUN composer install \
@@ -34,14 +34,12 @@ RUN composer install \
     --no-interaction \
     --no-scripts
 
-# Application
+# Copy Laravel application
 COPY . .
 
-# Frontend
+# Install frontend dependencies and build Vite assets
 RUN npm ci
 RUN npm run build
 
-# Laravel Caddy configuration
-COPY Caddyfile /etc/caddy/Caddyfile
-
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
+# Start Laravel
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT}"]
